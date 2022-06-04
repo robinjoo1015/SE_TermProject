@@ -6,7 +6,8 @@ public class BridgeStartCell extends Cell {
     public BridgeStartCell(Direction directionPrev, Direction directionNext) {
         this.directionPrev = directionPrev;
         this.directionNext = directionNext;
-        this.directionBridgeNext = Direction.RIGHT;
+//        this.directionBridgeNext = Direction.RIGHT;
+        this.directionBridgeNext = Direction.R;
         this.bridgeCard = Card.B;
     }
 
