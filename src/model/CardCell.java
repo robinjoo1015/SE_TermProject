@@ -15,11 +15,15 @@ public class CardCell extends Cell {
         return this.cardAvailable;
     }
 
-    public int getCardScore() {
-        int cellCardScore = 0;
-        if(isCardAvailable()) {
-            cellCardScore = this.card.getCardScore();
-        }
-        return cellCardScore;
+//    public int getCardScore() {
+//        int cellCardScore = 0;
+//        if(isCardAvailable()) {
+//            cellCardScore = this.card.getCardScore();
+//        }
+//        return cellCardScore;
+//    }
+    public Card getCard() {
+        this.cardAvailable = false;
+        return this.card;
     }
 }
