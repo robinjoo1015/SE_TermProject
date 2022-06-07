@@ -1,3 +1,4 @@
+import model.Cell;
 import model.GameMap;
 import model.Player;
 import view.GUI;
@@ -19,16 +20,12 @@ public class BridgeGame {
         }
         File file = new File(mapFileName);
         GameMap gameMap = new GameMap(file.getAbsolutePath());
+
         System.out.print("Enter number of player (2~4) : ");
         int playerNumber = scanner.nextInt();
         ArrayList<Player> playerList = new ArrayList<Player>();
         for(int i=0;i<playerNumber;i++) {
             playerList.add(new Player(gameMap.getStartCell()));
-        }
-
-        for(int i=0;i<playerNumber;i++) {
-            playerList.get(i);
-            System.out.printf("%d", i);
         }
 
         GUI gui = new GUI(gameMap, playerList);

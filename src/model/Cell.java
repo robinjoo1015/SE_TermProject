@@ -1,10 +1,10 @@
 package model;
 
 public abstract class Cell {
-    static Direction directionPrev;
-    static Direction directionNext;
-    static Cell cellPrev;
-    static Cell cellNext;
+    public Direction directionPrev;
+    public Direction directionNext;
+    public Cell cellPrev;
+    public Cell cellNext;
 
     public Direction getDirectionPrev() {
         return this.directionPrev;

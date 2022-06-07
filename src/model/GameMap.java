@@ -9,15 +9,14 @@ public class GameMap {
     public static ArrayList<Cell> gameMapArrayList;
     public GameMap(String filePath) throws IOException {
         gameMapArrayList = new ArrayList<Cell>();
-        System.out.println(filePath);
+//        System.out.println(filePath);
         BufferedReader mapFileReader = new BufferedReader(
                 new FileReader(filePath)
         );
         String mapReadBuffer;
-        Cell prevCell = null, currentCell = null;
+        Direction directionPrev = null, directionNext = null;
         while((mapReadBuffer = mapFileReader.readLine()) != null) {
             System.out.println(mapReadBuffer);
-            Direction directionPrev = null, directionNext = null;
             try {
 //                switch(mapReadBuffer.charAt(2)) {
 //                    case 'L':
@@ -34,8 +33,7 @@ public class GameMap {
 //                        break;
 //                }
                 directionPrev = Direction.valueOf(mapReadBuffer.substring(2, 3));
-            } catch(Exception e) {}
-            try {
+                try {
 //                switch(mapReadBuffer.charAt(4)) {
 //                    case 'L':
 //                        directionNext = Direction.LEFT;
@@ -50,37 +48,71 @@ public class GameMap {
 //                        directionNext = Direction.DOWN;
 //                        break;
 //                }
-                directionNext = Direction.valueOf(mapReadBuffer.substring(4));
+                    directionNext = Direction.valueOf(mapReadBuffer.substring(4));
+                } catch(Exception e) {
+                    directionNext = directionPrev;
+                }
             } catch(Exception e) {
-                directionNext = directionPrev;
+                directionPrev = directionNext;
             }
+//            try {
+////                switch(mapReadBuffer.charAt(4)) {
+////                    case 'L':
+////                        directionNext = Direction.LEFT;
+////                        break;
+////                    case 'R':
+////                        directionNext = Direction.RIGHT;
+////                        break;
+////                    case 'U':
+////                        directionNext = Direction.UP;
+////                        break;
+////                    case 'D':
+////                        directionNext = Direction.DOWN;
+////                        break;
+////                }
+//                directionNext = Direction.valueOf(mapReadBuffer.substring(4));
+//            } catch(Exception e) {
+//                directionNext = directionPrev;
+//            }
+
+            Cell newCell;
             switch (mapReadBuffer.charAt(0)) {
                 case 'S':
-                    currentCell = new StartCell(directionNext);
+                    newCell = new StartCell(directionNext);
                     break;
                 case 'E':
-                    currentCell = new EndCell(prevCell.getDirectionNext().getOpposite());
+                    newCell = new EndCell(directionPrev);
                     break;
                 case 'C':
-                    currentCell = new NormalCell(directionPrev, directionNext);
+                    newCell = new NormalCell(directionPrev, directionNext);
                     break;
                 case 'B':
-                    currentCell = new BridgeStartCell(directionPrev, directionNext);
+                    newCell = new BridgeStartCell(directionPrev, directionNext);
                     break;
                 case 'b':
-                    currentCell = new BridgeEndCell(directionPrev, directionNext);
+                    newCell = new BridgeEndCell(directionPrev, directionNext);
                     break;
                 default:
-                    currentCell = new CardCell(directionPrev, directionNext, Card.valueOf(mapReadBuffer.substring(0, 1)));
+                    newCell = new CardCell(directionPrev, directionNext, Card.valueOf(mapReadBuffer.substring(0, 1)));
             }
-            if(prevCell != null) {
-                prevCell.setCellNext(currentCell);
-            }
-            currentCell.setCellPrev(prevCell);
-            prevCell = currentCell;
-            gameMapArrayList.add(currentCell);
+            gameMapArrayList.add(newCell);
         }
         mapFileReader.close();
+
+        for(int i=0;i<gameMapArrayList.size();i++) {
+            Cell currentCell = gameMapArrayList.get(i);
+            if(i==0) {
+                currentCell.setCellPrev(null);
+                currentCell.setCellNext(gameMapArrayList.get(i+1));
+            } else if(i==gameMapArrayList.size()-1) {
+                currentCell.setCellPrev(gameMapArrayList.get(i-1));
+                currentCell.setCellNext(null);
+            } else {
+                currentCell.setCellPrev(gameMapArrayList.get(i-1));
+                currentCell.setCellNext(gameMapArrayList.get(i+1));
+            }
+        }
+
     }
 
     public Cell getStartCell() {
