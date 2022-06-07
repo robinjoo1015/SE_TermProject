@@ -1,5 +1,6 @@
 import model.GameMap;
 import model.Player;
+import view.GUI;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,5 +30,7 @@ public class BridgeGame {
             playerList.get(i);
             System.out.printf("%d", i);
         }
+
+        GUI gui = new GUI(gameMap, playerList);
     }
 }
