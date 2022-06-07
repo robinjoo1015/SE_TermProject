@@ -5,9 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameMap  {
+public class GameMap {
     public static ArrayList<Cell> gameMapArrayList;
     public GameMap(String filePath) throws IOException {
+        gameMapArrayList = new ArrayList<Cell>();
         System.out.println(filePath);
         BufferedReader mapFileReader = new BufferedReader(
                 new FileReader(filePath)
@@ -77,7 +78,12 @@ public class GameMap  {
             }
             currentCell.setCellPrev(prevCell);
             prevCell = currentCell;
+            gameMapArrayList.add(currentCell);
         }
         mapFileReader.close();
+    }
+
+    public Cell getStartCell() {
+        return gameMapArrayList.get(0);
     }
 }
