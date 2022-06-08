@@ -8,8 +8,6 @@ import java.util.ArrayList;
 public class Cell {
     public Direction directionPrev;
     public Direction directionNext;
-    //    public Cell cellPrev;
-//    public Cell cellNext;
     public ArrayList<Player> cellPlayerList;
 
     public Cell() {
@@ -24,24 +22,12 @@ public class Cell {
         return this.directionNext;
     }
 
-//    public Cell getCellPrev() {
-//        return this.cellPrev;
-//    }
-//
-//    public Cell getCellNext() {
-//        return this.cellNext;
-//    }
-//
-//    public void setCellPrev(Cell cellPrev) {
-//        this.cellPrev = cellPrev;
-//    }
-//
-//    public void setCellNext(Cell cellNext) {
-//        this.cellNext = cellNext;
-//    }
-
     public void addCellPlayer(Player player) {
         this.cellPlayerList.add(player);
+    }
+
+    public ArrayList<Player> getCellPlayerList() {
+        return this.cellPlayerList;
     }
 
     public void removeCellPlayer(Player player) throws Exception {

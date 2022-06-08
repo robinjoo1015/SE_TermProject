@@ -19,6 +19,10 @@ public class Player {
         return playerId;
     }
 
+    public ArrayList<Card> getCardList() {
+        return this.cardList;
+    }
+
     public int getBridgeCardCount() {
         int count = 0;
         for (int i = 0; i < this.cardList.size(); i++) {

@@ -48,6 +48,10 @@ public class GameModel {
         return this.gameMap;
     }
 
+    public ArrayList<Player> getPlayerList() {
+        return this.playerList;
+    }
+
     private void nextTurn() {
         this.turnNumber = (this.turnNumber + 1) % playerNumber;
     }

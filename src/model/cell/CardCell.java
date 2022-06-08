@@ -5,8 +5,8 @@ import model.Direction;
 import model.Player;
 
 public class CardCell extends Cell {
-    public static Card card;
-    public static boolean cardAvailable;
+    private Card card;
+    private boolean cardAvailable;
 
     public CardCell(Direction directionPrev, Direction directionNext, Card card) {
         super();
@@ -27,6 +27,11 @@ public class CardCell extends Cell {
 //        }
 //        return cellCardScore;
 //    }
+
+    public Card getCardType() {
+        return this.card;
+    }
+
     public Card getCard() {
         this.cardAvailable = false;
         return this.card;

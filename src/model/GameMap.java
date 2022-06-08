@@ -47,24 +47,24 @@ public class GameMap {
 
             Cell newCell;
             switch (mapReadBuffer.charAt(0)) {
-                case 'S':
+                case 'S' -> {
                     if (directionPrev == null) {
                         newCell = new StartCell(directionNext);
                     } else {
                         newCell = new CardCell(directionPrev, directionNext, Card.S);
                     }
-                    break;
-                case 'E':
+                }
+                case 'E' -> {
                     newCell = new EndCell(directionPrev);
-                    break;
-                case 'C':
+                }
+                case 'C' -> {
                     newCell = new NormalCell(directionPrev, directionNext);
-                    break;
-                case 'B':
+                }
+                case 'B' -> {
                     newCell = new BridgeStartCell(directionPrev, directionNext);
                     bridgeInfoArrayList.add(new BridgeInfo((BridgeStartCell) newCell, x, y));
-                    break;
-                case 'b':
+                }
+                case 'b' -> {
                     newCell = new BridgeEndCell(directionPrev, directionNext);
                     int l = 1;
                     for (int i = 0; i < bridgeInfoArrayList.size(); i++) {
@@ -74,28 +74,25 @@ public class GameMap {
                             tempBridgeInfo.setBridgeLength(x - tempBridgeInfo.x - 1);
                         }
                     }
-                    break;
-                default:
+                }
+                default -> {
                     newCell = new CardCell(directionPrev, directionNext, Card.valueOf(mapReadBuffer.substring(0, 1)));
+                }
             }
             gameMapArrayList.add(newCell);
             try {
                 switch (directionNext) {
-                    case U: {
+                    case U -> {
                         y += 1;
-                        break;
                     }
-                    case D: {
+                    case D -> {
                         y -= 1;
-                        break;
                     }
-                    case L: {
+                    case L -> {
                         x -= 1;
-                        break;
                     }
-                    case R: {
+                    case R -> {
                         x += 1;
-                        break;
                     }
                 }
             } catch (Exception e) {
