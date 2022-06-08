@@ -1,22 +1,36 @@
 package model;
 
+import model.cell.*;
+
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class GameMap {
-    public static ArrayList<Cell> gameMapArrayList;
-    public GameMap(String filePath) throws IOException {
+    private ArrayList<Cell> gameMapArrayList;
+    public GameMap() throws IOException {
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter map file name (press enter for default) : ");
+        String mapFileName = scanner.nextLine();
+        if(mapFileName.length() == 0) {
+            mapFileName = "default";
+        }
+        mapFileName = "./map/"+mapFileName+".map";
+        File mapFile = new File(mapFileName);
+
         gameMapArrayList = new ArrayList<Cell>();
 //        System.out.println(filePath);
         BufferedReader mapFileReader = new BufferedReader(
-                new FileReader(filePath)
+                new FileReader(mapFileName)
         );
         String mapReadBuffer;
         Direction directionPrev = null, directionNext = null;
         while((mapReadBuffer = mapFileReader.readLine()) != null) {
-            System.out.println(mapReadBuffer);
+//            System.out.println(mapReadBuffer);
             try {
 //                switch(mapReadBuffer.charAt(2)) {
 //                    case 'L':
@@ -51,6 +65,7 @@ public class GameMap {
                     directionNext = Direction.valueOf(mapReadBuffer.substring(4));
                 } catch(Exception e) {
                     directionNext = directionPrev;
+                    directionPrev = null;
                 }
             } catch(Exception e) {
                 directionPrev = directionNext;
@@ -78,7 +93,11 @@ public class GameMap {
             Cell newCell;
             switch (mapReadBuffer.charAt(0)) {
                 case 'S':
-                    newCell = new StartCell(directionNext);
+                    if(directionPrev==null) {
+                        newCell = new StartCell(directionNext);
+                    } else {
+                        newCell = new CardCell(directionPrev, directionNext, Card.S);
+                    }
                     break;
                 case 'E':
                     newCell = new EndCell(directionPrev);
@@ -99,23 +118,27 @@ public class GameMap {
         }
         mapFileReader.close();
 
-        for(int i=0;i<gameMapArrayList.size();i++) {
-            Cell currentCell = gameMapArrayList.get(i);
-            if(i==0) {
-                currentCell.setCellPrev(null);
-                currentCell.setCellNext(gameMapArrayList.get(i+1));
-            } else if(i==gameMapArrayList.size()-1) {
-                currentCell.setCellPrev(gameMapArrayList.get(i-1));
-                currentCell.setCellNext(null);
-            } else {
-                currentCell.setCellPrev(gameMapArrayList.get(i-1));
-                currentCell.setCellNext(gameMapArrayList.get(i+1));
-            }
-        }
+//        for(int i=0;i<gameMapArrayList.size();i++) {
+//            Cell currentCell = gameMapArrayList.get(i);
+//            if(i==0) {
+//                currentCell.setCellPrev(null);
+//                currentCell.setCellNext(gameMapArrayList.get(i+1));
+//            } else if(i==gameMapArrayList.size()-1) {
+//                currentCell.setCellPrev(gameMapArrayList.get(i-1));
+//                currentCell.setCellNext(null);
+//            } else {
+//                currentCell.setCellPrev(gameMapArrayList.get(i-1));
+//                currentCell.setCellNext(gameMapArrayList.get(i+1));
+//            }
+//        }
 
     }
 
-    public Cell getStartCell() {
-        return gameMapArrayList.get(0);
+    public ArrayList<Cell> getGameMapArrayList() {
+        return this.gameMapArrayList;
     }
+
+//    public Cell getStartCell() {
+//        return gameMapArrayList.get(0);
+//    }
 }
