@@ -12,7 +12,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameModel {
-    public GameMap gameMap;
+    private GameMap gameMap;
     private ArrayList<Cell> gameMapArrayList;
     private ArrayList<Player> playerList;
     private ArrayList<Cell> playerCellList;
@@ -42,6 +42,10 @@ public class GameModel {
 
         this.turnNumber = 0;
         randomGenerator = new Random();
+    }
+
+    public GameMap getGameMap() {
+        return this.gameMap;
     }
 
     private void nextTurn() {

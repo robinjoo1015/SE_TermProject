@@ -1,9 +1,8 @@
-package view;
+package view.gui;
 
 import model.BridgeInfo;
 import model.cell.BridgeStartCell;
 import model.cell.Cell;
-import model.Direction;
 import model.GameMap;
 import model.cell.EndCell;
 import model.cell.StartCell;
@@ -56,7 +55,6 @@ public class GameFrame extends JFrame {
                 break;
             }
         }
-//        System.out.printf("%d %d %d %d\n", minx, miny, maxx, maxy);
 
         cellSize = 60;
         curx = cellSize * (2 - minx);
@@ -131,7 +129,12 @@ public class GameFrame extends JFrame {
             }
         }
 
-        this.setSize((maxx - minx + 8) * cellSize, (maxy - miny + 8) * cellSize);
+        int gamePanelWidth = 300;
+        GamePanel gamePanel = new GamePanel();
+        gamePanel.setBounds((maxx - minx + 8) * cellSize, 0, gamePanelWidth, (maxy - miny + 8) * cellSize);
+        this.add(gamePanel);
+
+        this.setSize((maxx - minx + 8) * cellSize + gamePanelWidth, (maxy - miny + 8) * cellSize);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setVisible(true);

@@ -1,5 +1,5 @@
 import model.GameModel;
-import view.GameFrame;
+import view.GameView;
 
 import java.io.IOException;
 
@@ -7,7 +7,6 @@ public class BridgeGame {
     public static void main(String[] args) throws IOException {
 
         GameModel gameModel = new GameModel();
-
-        GameFrame gameFrame = new GameFrame(gameModel.gameMap);
+        GameView gameView = new GameView(gameModel);
     }
 }
