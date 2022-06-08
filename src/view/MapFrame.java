@@ -55,8 +55,8 @@ public class MapFrame extends JFrame {
 //        System.out.printf("%d %d %d %d\n", minx, miny, maxx, maxy);
 
         cellSize = 60;
-        curx = cellSize*(1-minx);
-        cury = cellSize*(1-miny);
+        curx = cellSize*(2-minx);
+        cury = cellSize*(2-miny);
         for(int i=0;i<gameMapArrayList.size();i++) {
             currentCell = gameMapArrayList.get(i);
             if(currentCell.getClass() == StartCell.class) {
@@ -110,7 +110,7 @@ public class MapFrame extends JFrame {
             }
         }
 
-        this.setSize((maxx-minx+6)*cellSize, (maxy-miny+6)*cellSize);
+        this.setSize((maxx-minx+8)*cellSize, (maxy-miny+8)*cellSize);
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
