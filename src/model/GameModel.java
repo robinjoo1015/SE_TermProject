@@ -41,6 +41,7 @@ public class GameModel {
         }
 
         this.turnNumber = 0;
+        this.diceNumber = 0;
         randomGenerator = new Random();
     }
 

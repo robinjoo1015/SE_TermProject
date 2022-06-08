@@ -157,7 +157,7 @@ public class GameFrame extends JFrame {
 
         this.setSize(this.gameFrameWidth, this.gameFrameHeight);
 
-//        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
     }
 
 }
