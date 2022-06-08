@@ -5,7 +5,8 @@ import model.Player;
 
 public class BridgeStartCell extends Cell {
     public final Direction directionBridgeNext;
-//    public Cell cellBridgeNext;
+
+    //    public Cell cellBridgeNext;
 //    public static Card bridgeCard;
     public BridgeStartCell(Direction directionPrev, Direction directionNext) {
         super();

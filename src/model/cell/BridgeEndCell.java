@@ -5,7 +5,8 @@ import model.Direction;
 public class BridgeEndCell extends Cell {
     public final Direction directionBridgePrev;
     public Cell cellBridgePrev;
-//    public static Card bridgeCard;
+
+    //    public static Card bridgeCard;
     public BridgeEndCell(Direction directionPrev, Direction directionNext) {
         super();
         this.directionPrev = directionPrev;

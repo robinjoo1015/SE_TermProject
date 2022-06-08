@@ -20,7 +20,7 @@ public class CardCell extends Cell {
         return this.cardAvailable;
     }
 
-//    public int getCardScore() {
+    //    public int getCardScore() {
 //        int cellCardScore = 0;
 //        if(isCardAvailable()) {
 //            cellCardScore = this.card.getCardScore();

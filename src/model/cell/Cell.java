@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Cell {
     public Direction directionPrev;
     public Direction directionNext;
-//    public Cell cellPrev;
+    //    public Cell cellPrev;
 //    public Cell cellNext;
     public ArrayList<Player> cellPlayerList;
 
@@ -47,7 +47,7 @@ public class Cell {
     public void removeCellPlayer(Player player) throws Exception {
         try {
             this.cellPlayerList.remove(player);
-        } catch(Exception e) {
+        } catch (Exception e) {
             throw e;
         }
     }
