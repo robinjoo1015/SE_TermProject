@@ -41,7 +41,8 @@ public class GameMap {
                     directionPrev = null;
                 }
             } catch (Exception e) {
-                directionPrev = null;
+                directionPrev = directionNext.getOpposite();
+                directionNext = null;
             }
 
             Cell newCell;
@@ -78,24 +79,27 @@ public class GameMap {
                     newCell = new CardCell(directionPrev, directionNext, Card.valueOf(mapReadBuffer.substring(0, 1)));
             }
             gameMapArrayList.add(newCell);
-
-            switch (directionNext) {
-                case U: {
-                    y += 1;
-                    break;
+            try {
+                switch (directionNext) {
+                    case U: {
+                        y += 1;
+                        break;
+                    }
+                    case D: {
+                        y -= 1;
+                        break;
+                    }
+                    case L: {
+                        x -= 1;
+                        break;
+                    }
+                    case R: {
+                        x += 1;
+                        break;
+                    }
                 }
-                case D: {
-                    y -= 1;
-                    break;
-                }
-                case L: {
-                    x -= 1;
-                    break;
-                }
-                case R: {
-                    x += 1;
-                    break;
-                }
+            } catch (Exception e) {
+                break;
             }
         }
         mapFileReader.close();
@@ -105,4 +109,7 @@ public class GameMap {
         return this.gameMapArrayList;
     }
 
+    public ArrayList<BridgeInfo> getBridgeInfoArrayList() {
+        return this.bridgeInfoArrayList;
+    }
 }

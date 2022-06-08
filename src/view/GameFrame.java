@@ -1,5 +1,7 @@
 package view;
 
+import model.BridgeInfo;
+import model.cell.BridgeStartCell;
 import model.cell.Cell;
 import model.Direction;
 import model.GameMap;
@@ -23,6 +25,7 @@ public class GameFrame extends JFrame {
         Cell currentCell = null;
 
         ArrayList<Cell> gameMapArrayList = gameMap.getGameMapArrayList();
+        ArrayList<BridgeInfo> bridgeInfoArrayList = gameMap.getBridgeInfoArrayList();
 
         for (int i = 0; i < gameMapArrayList.size(); i++) {
             currentCell = gameMapArrayList.get(i);
@@ -64,20 +67,28 @@ public class GameFrame extends JFrame {
                 CellPanel cellPanel = new CellPanel(curx, cury, cellSize * 2, cellSize * 2);
                 cellPanel.setBackground(Color.yellow);
                 this.add(cellPanel);
-                if (currentCell.getDirectionNext() == Direction.U) {
-                    cury += cellSize;
-                } else if (currentCell.getDirectionNext() == Direction.D) {
-                    cury -= cellSize;
-                } else {
-                    curx += cellSize;
+                switch (currentCell.getDirectionNext()) {
+                    case L:
+                    case U:
+                        break;
+                    case D:
+                    case R:
+                        cury += cellSize;
+                        curx += cellSize;
                 }
             } else if (currentCell.getClass() == EndCell.class) {
-                if (currentCell.getDirectionPrev() == Direction.U) {
-                    cury -= cellSize;
-                } else if (currentCell.getDirectionPrev() == Direction.D) {
-                    cury += cellSize;
-                } else {
-                    curx += cellSize;
+                switch (currentCell.getDirectionPrev()) {
+                    case R: {
+                        curx -= cellSize;
+                        break;
+                    }
+                    case D: {
+                        cury -= cellSize;
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
                 }
                 CellPanel cellPanel = new CellPanel(curx, cury, cellSize * 2, cellSize * 2);
                 cellPanel.setBackground(Color.yellow);
@@ -86,6 +97,15 @@ public class GameFrame extends JFrame {
                 CellPanel cellPanel = new CellPanel(curx, cury, cellSize, cellSize);
                 cellPanel.setBackground(Color.orange);
                 this.add(cellPanel);
+                if (currentCell.getClass() == BridgeStartCell.class) {
+                    for (int j = 0; j < bridgeInfoArrayList.size(); j++) {
+                        if (bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
+                            CellPanel bridgePanel = new CellPanel(curx + cellSize, cury, cellSize * bridgeInfoArrayList.get(j).getBridgeLength(), cellSize);
+                            bridgePanel.setBackground(new Color(0xCC5533));
+                            this.add(bridgePanel);
+                        }
+                    }
+                }
             }
             try {
                 switch (currentCell.getDirectionNext()) {
