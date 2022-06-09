@@ -95,6 +95,10 @@ public class MapPanel extends JPanel implements MapObserver {
                         if (bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
                             CellPanel bridgePanel = new CellPanel(curx + this.cellSize, cury, this.cellSize * bridgeInfoArrayList.get(j).getBridgeLength(), this.cellSize);
                             bridgePanel.setBackground(new Color(0xbc9b71));
+                            BufferedImage image = ImageIO.read(new File("./res/bridge.png"));
+                            JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(bridgePanel.getWidth(), bridgePanel.getHeight(), Image.SCALE_DEFAULT)));
+                            picLabel.setBounds(0, 0, bridgePanel.getWidth(), bridgePanel.getHeight());
+                            bridgePanel.add(picLabel);
                             this.add(bridgePanel);
                         }
                     }
@@ -105,8 +109,8 @@ public class MapPanel extends JPanel implements MapObserver {
             for (int j = 0; j < currentCellPlayerList.size(); j++) {
                 JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId()), SwingConstants.CENTER);
                 int playerId = currentCellPlayerList.get(j).getPlayerId();
-                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2), (playerId / 2) * (cellPanel.getHeight() / 2), cellPanel.getWidth() / 2, cellPanel.getHeight() / 2);
-                playerLabel.setBorder(new LineBorder(Color.black));
+                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2) + 1, (playerId / 2) * (cellPanel.getHeight() / 2) + 1, cellPanel.getWidth() / 2 - 2, cellPanel.getHeight() / 2 - 2);
+                playerLabel.setBorder(new LineBorder(Color.green));
                 playerLabel.setForeground(Color.red);
                 playerLabel.setBackground(null);
                 cellPanel.add(playerLabel);
@@ -208,6 +212,10 @@ public class MapPanel extends JPanel implements MapObserver {
                         if (bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
                             CellPanel bridgePanel = new CellPanel(curx + this.cellSize, cury, this.cellSize * bridgeInfoArrayList.get(j).getBridgeLength(), this.cellSize);
                             bridgePanel.setBackground(new Color(0xbc9b71));
+                            BufferedImage image = ImageIO.read(new File("./res/bridge.png"));
+                            JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(bridgePanel.getWidth(), bridgePanel.getHeight(), Image.SCALE_DEFAULT)));
+                            picLabel.setBounds(0, 0, bridgePanel.getWidth(), bridgePanel.getHeight());
+                            bridgePanel.add(picLabel);
                             this.add(bridgePanel);
                         }
                     }
@@ -218,8 +226,8 @@ public class MapPanel extends JPanel implements MapObserver {
             for (int j = 0; j < currentCellPlayerList.size(); j++) {
                 JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId()), SwingConstants.CENTER);
                 int playerId = currentCellPlayerList.get(j).getPlayerId();
-                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2), (playerId / 2) * (cellPanel.getHeight() / 2), cellPanel.getWidth() / 2, cellPanel.getHeight() / 2);
-                playerLabel.setBorder(new LineBorder(Color.black));
+                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2) + 1, (playerId / 2) * (cellPanel.getHeight() / 2) + 1, cellPanel.getWidth() / 2 - 2, cellPanel.getHeight() / 2 - 2);
+                playerLabel.setBorder(new LineBorder(Color.green));
                 playerLabel.setForeground(Color.red);
                 playerLabel.setBackground(null);
                 cellPanel.add(playerLabel);

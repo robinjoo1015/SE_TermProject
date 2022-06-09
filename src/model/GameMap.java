@@ -25,7 +25,8 @@ public class GameMap {
                 if (mapFileName.length() == 0) {
                     mapFileName = "default";
                 }
-                mapFileName = "./map/" + mapFileName.split(".map")[0] + ".map";
+                mapFileName = "./map/" + mapFileName.split("\\.map")[0] + ".map";
+//                System.out.println(mapFileName);
                 mapFileReader = new BufferedReader(
                         new FileReader(mapFileName)
                 );

@@ -8,8 +8,5 @@ public class StartCell extends Cell {
         super();
         this.directionNext = directionNext;
         this.directionPrev = null;
-//        this.cellPrev = null;
     }
-
-
 }

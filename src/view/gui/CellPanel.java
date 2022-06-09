@@ -1,12 +1,8 @@
 package view.gui;
 
-import model.Player;
-import model.cell.Cell;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.util.ArrayList;
 
 public class CellPanel extends JPanel {
     public CellPanel(int x, int y, int width, int height) {

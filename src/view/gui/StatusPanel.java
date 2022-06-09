@@ -26,9 +26,9 @@ public class StatusPanel extends JPanel {
         this.setLayout(null);
 
         JLabel playerLabel = new JLabel("Player " + Integer.toString(player.getPlayerId()));
-        playerLabel.setBounds(0, 0, this.panelWidth/2, this.panelHeight/2);
+        playerLabel.setBounds(0, 0, this.panelWidth / 2, this.panelHeight / 2);
         JLabel scoreLabel = new JLabel("Score = " + Integer.toString(player.getPlayerScore()));
-        scoreLabel.setBounds(this.panelWidth/2, 0, this.panelWidth/2, this.panelHeight/2);
+        scoreLabel.setBounds(this.panelWidth / 2, 0, this.panelWidth / 2, this.panelHeight / 2);
 
         this.add(playerLabel);
         this.add(scoreLabel);

@@ -146,7 +146,7 @@ public class GameModel implements MapObservable, GameObservable {
                 return false;
             }
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -225,7 +225,7 @@ public class GameModel implements MapObservable, GameObservable {
 
     @Override
     public void notifyMapUpdate() {
-        for(int i=0;i<this.mapObserverArrayList.size();i++) {
+        for (int i = 0; i < this.mapObserverArrayList.size(); i++) {
             this.mapObserverArrayList.get(i).update();
         }
     }
@@ -242,7 +242,7 @@ public class GameModel implements MapObservable, GameObservable {
 
     @Override
     public void notifyGameUpdate() {
-        for(int i=0;i<this.gameObserverArrayList.size();i++) {
+        for (int i = 0; i < this.gameObserverArrayList.size(); i++) {
             this.gameObserverArrayList.get(i).update();
         }
     }

@@ -25,7 +25,7 @@ public class GamePanel extends JPanel implements GameObserver {
         this.controlPanelHeight = 300;
 
 
-        this.setBounds(mapPanelWidth, 0, this.panelWidth, this.statusPanelHeight*this.gameModel.getPlayerList().size()+this.controlPanelHeight);
+        this.setBounds(mapPanelWidth, 0, this.panelWidth, this.statusPanelHeight * this.gameModel.getPlayerList().size() + this.controlPanelHeight);
         this.setBorder(new LineBorder(Color.black));
         this.setLayout(null);
 
