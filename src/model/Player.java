@@ -11,8 +11,8 @@ public class Player {
 
     public Player(int id) {
         this.cardList = new ArrayList<Card>();
-//        this.currentCell = startCell;
         this.playerId = id;
+        this.playerScore = 0;
     }
 
     public int getPlayerId() {
@@ -21,6 +21,11 @@ public class Player {
 
     public ArrayList<Card> getCardList() {
         return this.cardList;
+    }
+
+    public void addCard(Card card) {
+        this.cardList.add(card);
+        this.playerScore += card.getCardScore();
     }
 
     public int getBridgeCardCount() {
@@ -40,5 +45,13 @@ public class Player {
                 return;
             }
         }
+    }
+
+    public void addScore(int score) {
+        this.playerScore += score;
+    }
+
+    public int getPlayerScore() {
+        return this.playerScore;
     }
 }

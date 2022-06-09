@@ -1,6 +1,8 @@
 package view.gui;
 
+import controller.GameController;
 import model.BridgeInfo;
+import model.GameModel;
 import model.Player;
 import model.cell.*;
 import model.GameMap;
@@ -18,21 +20,27 @@ public class GameFrame extends JFrame {
     private int gameFrameWidth;
     private int gameFrameHeight;
     private final int gamePanelWidth;
+    private GameModel gameModel;
+    private GameMap gameMap;
+    private GameController gameController;
 
-    public GameFrame(GameMap gameMap, int gamePanelWidth) throws IOException {
+    public GameFrame(GameModel gameModel, GameController gameController) throws IOException {
         this.setTitle("Bridge Game GUI");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        this.setResizable(false);
         this.setResizable(true);
-        this.setBackground(Color.white);
         this.setLayout(null);
 
-        this.gamePanelWidth = gamePanelWidth;
+        this.gameModel = gameModel;
+        this.gameMap = gameModel.getGameMap();
+        this.gameController = gameController;
+
+        this.gamePanelWidth = 300;
         int minx = 0, miny = 0, maxx = 0, maxy = 0, curx = 0, cury = 0;
         Cell currentCell = null;
 
-        ArrayList<Cell> gameMapArrayList = gameMap.getGameMapArrayList();
-        ArrayList<BridgeInfo> bridgeInfoArrayList = gameMap.getBridgeInfoArrayList();
+        ArrayList<Cell> gameMapArrayList = this.gameMap.getGameMapArrayList();
+        ArrayList<BridgeInfo> bridgeInfoArrayList = this.gameMap.getBridgeInfoArrayList();
 
         for (int i = 0; i < gameMapArrayList.size(); i++) {
             currentCell = gameMapArrayList.get(i);
@@ -63,99 +71,27 @@ public class GameFrame extends JFrame {
         this.cellSize = 60;
         curx = this.cellSize * (1 - minx);
         cury = this.cellSize * (1 - miny);
+        int mapPanelWidth = (maxx - minx + 6) * this.cellSize;
+        int mapPanelHeight = (maxx - minx + 6) * this.cellSize;
 
-        for (int i = 0; i < gameMapArrayList.size(); i++) {
-            currentCell = gameMapArrayList.get(i);
-            CellPanel cellPanel;
-            if (currentCell.getClass() == StartCell.class) {
-                cellPanel = new CellPanel(curx, cury, this.cellSize * 2, this.cellSize * 2);
-                cellPanel.setBackground(new Color(0xf8d55c));
-                cellPanel.add(new JLabel("START"));
-                switch (currentCell.getDirectionNext()) {
-                    case L, U -> {
-                        break;
-                    }
-                    case D, R -> {
-                        cury += this.cellSize;
-                        curx += this.cellSize;
-                    }
-                }
-            } else if (currentCell.getClass() == EndCell.class) {
-                switch (currentCell.getDirectionPrev()) {
-                    case R -> {
-                        curx -= this.cellSize;
-                    }
-                    case D -> {
-                        cury -= this.cellSize;
-                    }
-                    default -> {
-                        break;
-                    }
-                }
-                cellPanel = new CellPanel(curx, cury, this.cellSize * 2, this.cellSize * 2);
-                cellPanel.setBackground(new Color(0xf8d55c));
-                cellPanel.add(new JLabel("END"));
-            } else {
-                cellPanel = new CellPanel(curx, cury, this.cellSize, this.cellSize);
-                cellPanel.setBackground(new Color(0xfae39a));
-                if (currentCell.getClass() == CardCell.class) {
-                    if (((CardCell) currentCell).isCardAvailable()) {
-                        BufferedImage image = null;
-                        switch (((CardCell) currentCell).getCardType()) {
-                            case P -> {
-                                image = ImageIO.read(new File("./res/phillipsDriver.png"));
-                            }
-                            case H -> {
-                                image = ImageIO.read(new File("./res/hammer.png"));
-                            }
-                            case S -> {
-                                image = ImageIO.read(new File("./res/saw.png"));
-                            }
-                        }
-                        JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(this.cellSize - 10, this.cellSize - 10, Image.SCALE_DEFAULT)));
-                        cellPanel.add(picLabel);
-                    }
-                }
-                if (currentCell.getClass() == BridgeStartCell.class) {
-                    for (int j = 0; j < bridgeInfoArrayList.size(); j++) {
-                        if (bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
-                            CellPanel bridgePanel = new CellPanel(curx + this.cellSize, cury, this.cellSize * bridgeInfoArrayList.get(j).getBridgeLength(), this.cellSize);
-                            bridgePanel.setBackground(new Color(0xbc9b71));
-                            this.add(bridgePanel);
-                        }
-                    }
-                }
-            }
-            ArrayList<Player> currentCellPlayerList = currentCell.getCellPlayerList();
-            for (int j = 0; j < currentCellPlayerList.size(); j++) {
-                cellPanel.add(new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId())));
-            }
-            this.add(cellPanel);
+        MapPanel mapPanel = new MapPanel(this.gameModel, curx, cury, this.cellSize, mapPanelWidth, mapPanelHeight);
 
-            try {
-                switch (currentCell.getDirectionNext()) {
-                    case U -> {
-                        cury -= this.cellSize;
-                    }
-                    case D -> {
-                        cury += this.cellSize;
-                    }
-                    case L -> {
-                        curx -= this.cellSize;
-                    }
-                    case R -> {
-                        curx += this.cellSize;
-                    }
-                }
-            } catch (Exception e) {
-                break;
-            }
-        }
+        this.add(mapPanel);
 
-        this.gameFrameWidth = (maxx - minx + 6) * this.cellSize + this.gamePanelWidth;
-        this.gameFrameHeight = (maxy - miny + 6) * this.cellSize;
+        this.gameFrameWidth = mapPanelWidth + this.gamePanelWidth;
+        this.gameFrameHeight = mapPanelHeight;
 
         this.setSize(this.gameFrameWidth, this.gameFrameHeight);
+
+
+        GamePanel gamePanel = new GamePanel(gameModel, gameController, gamePanelWidth, this.getWidth(), this.getHeight());
+
+//        this.gameFrameWidth = mapPanelWidth + this.gamePanelWidth;
+//        this.gameFrameHeight = Math.max(mapPanelHeight, gamePanel.getHeight());
+//
+//        this.setSize(this.gameFrameWidth, this.gameFrameHeight);
+
+        this.add(gamePanel);
 
         this.setLocationRelativeTo(null);
     }

@@ -1,3 +1,4 @@
+import controller.GameController;
 import model.GameModel;
 import view.GameView;
 
@@ -7,6 +8,6 @@ public class BridgeGame {
     public static void main(String[] args) throws IOException {
 
         GameModel gameModel = new GameModel();
-        GameView gameView = new GameView(gameModel);
+        GameController gameController = new GameController(gameModel);
     }
 }

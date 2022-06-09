@@ -1,20 +1,63 @@
 package view.gui;
 
+import controller.GameController;
+import model.GameModel;
 import model.Player;
+import view.GameObserver;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements GameObserver {
     private final int panelWidth;
+    private GameModel gameModel;
+    private GameController gameController;
+    private int statusPanelHeight;
 
-    public GamePanel(int panelWidth, int frameWidth, int frameHeight) {
+    public GamePanel(GameModel gameModel, GameController gameController, int panelWidth, int frameWidth, int frameHeight) {
+        this.gameModel = gameModel;
+        this.gameController = gameController;
         this.panelWidth = panelWidth;
-        this.setBounds(frameWidth - this.panelWidth, 0, panelWidth, frameHeight);
+        this.setBounds(frameWidth - this.panelWidth, 0, this.panelWidth, frameHeight);
         this.setBorder(new LineBorder(Color.black));
         this.setBackground(Color.gray);
         this.setLayout(null);
+
+        this.statusPanelHeight = 100;
+        ArrayList<Player> playerList = this.gameModel.getPlayerList();
+        for (int i = 0; i < playerList.size(); i++) {
+            StatusPanel statusPanel = new StatusPanel(playerList.get(i), this.getWidth(), this.statusPanelHeight);
+            this.add(statusPanel);
+        }
+
+        int controlPanelHeight = 300;
+        ControlPanel controlPanel = new ControlPanel(this.gameModel, this.gameController, this.getWidth(), this.getHeight(), controlPanelHeight);
+        this.add(controlPanel);
+
+        this.gameModel.gameSubscribe(this);
+
+    }
+
+    private void reRender() {
+        this.statusPanelHeight = 100;
+        ArrayList<Player> playerList = this.gameModel.getPlayerList();
+        for (int i = 0; i < playerList.size(); i++) {
+            StatusPanel statusPanel = new StatusPanel(playerList.get(i), this.getWidth(), this.statusPanelHeight);
+            this.add(statusPanel);
+        }
+
+        int controlPanelHeight = 300;
+        ControlPanel controlPanel = new ControlPanel(this.gameModel, this.gameController, this.getWidth(), this.getHeight(), controlPanelHeight);
+        this.add(controlPanel);
+    }
+
+    @Override
+    public void update() {
+        this.setVisible(false);
+        this.removeAll();
+        this.reRender();
+        this.setVisible(true);
     }
 }
