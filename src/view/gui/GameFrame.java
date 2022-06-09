@@ -27,15 +27,15 @@ public class GameFrame extends JFrame {
     public GameFrame(GameModel gameModel, GameController gameController) throws IOException {
         this.setTitle("Bridge Game GUI");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        this.setResizable(false);
         this.setResizable(true);
         this.setLayout(null);
+        this.setBackground(Color.white);
 
         this.gameModel = gameModel;
         this.gameMap = gameModel.getGameMap();
         this.gameController = gameController;
 
-        this.gamePanelWidth = 300;
+
         int minx = 0, miny = 0, maxx = 0, maxy = 0, curx = 0, cury = 0;
         Cell currentCell = null;
 
@@ -71,25 +71,24 @@ public class GameFrame extends JFrame {
         this.cellSize = 60;
         curx = this.cellSize * (1 - minx);
         cury = this.cellSize * (1 - miny);
+
         int mapPanelWidth = (maxx - minx + 6) * this.cellSize;
         int mapPanelHeight = (maxx - minx + 6) * this.cellSize;
-
         MapPanel mapPanel = new MapPanel(this.gameModel, curx, cury, this.cellSize, mapPanelWidth, mapPanelHeight);
-
         this.add(mapPanel);
 
-        this.gameFrameWidth = mapPanelWidth + this.gamePanelWidth;
-        this.gameFrameHeight = mapPanelHeight;
-
-        this.setSize(this.gameFrameWidth, this.gameFrameHeight);
-
-
-        GamePanel gamePanel = new GamePanel(gameModel, gameController, gamePanelWidth, this.getWidth(), this.getHeight());
-
 //        this.gameFrameWidth = mapPanelWidth + this.gamePanelWidth;
-//        this.gameFrameHeight = Math.max(mapPanelHeight, gamePanel.getHeight());
+//        this.gameFrameHeight = mapPanelHeight;
 //
 //        this.setSize(this.gameFrameWidth, this.gameFrameHeight);
+
+        this.gamePanelWidth = 300;
+        GamePanel gamePanel = new GamePanel(gameModel, gameController, gamePanelWidth, mapPanel.getWidth());
+
+        this.gameFrameWidth = mapPanelWidth + this.gamePanelWidth;
+        this.gameFrameHeight = Math.max(mapPanelHeight, gamePanel.getHeight());
+
+        this.setSize(this.gameFrameWidth, this.gameFrameHeight);
 
         this.add(gamePanel);
 

@@ -112,39 +112,43 @@ public class GameModel implements MapObservable, GameObservable {
         Cell currentCell = this.playerCellList.get(this.turnNumber);
         int currentCellIndex = this.gameMapArrayList.indexOf(currentCell);
 
-        for (int i = 0; i < moveString.length(); i++) {
-            Direction currentDirection = Direction.valueOf(moveString.substring(i, i + 1).toUpperCase());
-            if (currentCell.getDirectionPrev() == currentDirection && this.endPlayerCount == 0) {
-                currentCell = this.gameMapArrayList.get(--currentCellIndex);
-            } else if (currentCell.getDirectionNext() == currentDirection) {
-                currentCell = this.gameMapArrayList.get(++currentCellIndex);
-            } else if (currentCell.getClass() == BridgeStartCell.class && currentDirection == Direction.R) {
-                for (int j = 0; j < this.bridgeInfoArrayList.size(); j++) {
-                    if (this.bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
-                        currentCell = this.bridgeInfoArrayList.get(j).getBridgeEndCell();
-                        currentCellIndex = this.gameMapArrayList.indexOf(currentCell);
-                        break;
+        try {
+            for (int i = 0; i < moveString.length(); i++) {
+                Direction currentDirection = Direction.valueOf(moveString.substring(i, i + 1).toUpperCase());
+                if (currentCell.getDirectionPrev() == currentDirection && this.endPlayerCount == 0) {
+                    currentCell = this.gameMapArrayList.get(--currentCellIndex);
+                } else if (currentCell.getDirectionNext() == currentDirection) {
+                    currentCell = this.gameMapArrayList.get(++currentCellIndex);
+                } else if (currentCell.getClass() == BridgeStartCell.class && currentDirection == Direction.R) {
+                    for (int j = 0; j < this.bridgeInfoArrayList.size(); j++) {
+                        if (this.bridgeInfoArrayList.get(j).getBridgeStartCell() == currentCell) {
+                            currentCell = this.bridgeInfoArrayList.get(j).getBridgeEndCell();
+                            currentCellIndex = this.gameMapArrayList.indexOf(currentCell);
+                            break;
+                        }
                     }
-                }
-            } else if (currentCell.getClass() == BridgeEndCell.class && currentDirection == Direction.L && this.endPlayerCount == 0) {
-                for (int j = 0; j < this.bridgeInfoArrayList.size(); j++) {
-                    if (this.bridgeInfoArrayList.get(j).getBridgeEndCell() == currentCell) {
-                        currentCell = this.bridgeInfoArrayList.get(j).getBridgeStartCell();
-                        currentCellIndex = this.gameMapArrayList.indexOf(currentCell);
-                        break;
+                } else if (currentCell.getClass() == BridgeEndCell.class && currentDirection == Direction.L && this.endPlayerCount == 0) {
+                    for (int j = 0; j < this.bridgeInfoArrayList.size(); j++) {
+                        if (this.bridgeInfoArrayList.get(j).getBridgeEndCell() == currentCell) {
+                            currentCell = this.bridgeInfoArrayList.get(j).getBridgeStartCell();
+                            currentCellIndex = this.gameMapArrayList.indexOf(currentCell);
+                            break;
+                        }
                     }
+                } else {
+                    return false;
                 }
-            } else {
+                if (currentCell.getClass() == EndCell.class) {
+                    return true;
+                }
+            }
+            if (moveString.length() != this.movableNumber) {
                 return false;
             }
-            if (currentCell.getClass() == EndCell.class) {
-                return true;
-            }
-        }
-        if (moveString.length() != this.movableNumber) {
+            return true;
+        } catch(Exception e) {
             return false;
         }
-        return true;
     }
 
     public void movePlayer(String moveString) throws Exception {
@@ -180,10 +184,6 @@ public class GameModel implements MapObservable, GameObservable {
                     }
                 }
             }
-
-            if (currentCell.getClass() == CardCell.class && ((CardCell) currentCell).isCardAvailable()) {
-                currentPlayer.addCard(((CardCell) currentCell).getCard());
-            }
             if (currentCell.getClass() == EndCell.class) {
                 this.isPlayerEndList.set(this.turnNumber, true);
                 switch (this.endPlayerCount) {
@@ -199,6 +199,9 @@ public class GameModel implements MapObservable, GameObservable {
                 }
                 this.endPlayerCount += 1;
                 break;
+            }
+            if (currentCell.getClass() == CardCell.class && ((CardCell) currentCell).isCardAvailable()) {
+                currentPlayer.addCard(((CardCell) currentCell).getCard());
             }
         }
 

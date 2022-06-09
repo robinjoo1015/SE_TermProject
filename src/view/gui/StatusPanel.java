@@ -36,8 +36,10 @@ public class StatusPanel extends JPanel {
         int cardPanelWidth = 50;
         for (int i = 0; i < this.cardList.size(); i++) {
             JPanel cardPanel = new JPanel();
-            cardPanel.add(new JLabel(this.cardList.get(i).toString()));
+            cardPanel.add(new JLabel(this.cardList.get(i).toString(), SwingConstants.CENTER));
             cardPanel.setBounds(i * cardPanelWidth, this.panelHeight / 2, cardPanelWidth, this.panelHeight / 2);
+            cardPanel.setBorder(new LineBorder(Color.black));
+            cardPanel.setBackground(Color.pink);
             this.add(cardPanel);
         }
 

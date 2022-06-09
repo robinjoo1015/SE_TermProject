@@ -9,6 +9,7 @@ import view.MapObserver;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -21,11 +22,11 @@ public class MapPanel extends JPanel implements MapObserver {
     private int cellSize;
     private int initx;
     private int inity;
+
     public MapPanel(GameModel gameModel, int curx, int cury, int cellSize, int mapPanelWidth, int mapPanelHeight) throws IOException {
         this.gameModel = gameModel;
         this.gameMap = this.gameModel.getGameMap();
         this.cellSize = cellSize;
-        this.setBackground(Color.white);
         this.initx = curx;
         this.inity = cury;
 
@@ -85,6 +86,7 @@ public class MapPanel extends JPanel implements MapObserver {
                             }
                         }
                         JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(this.cellSize - 10, this.cellSize - 10, Image.SCALE_DEFAULT)));
+                        picLabel.setBounds(5, 5, this.cellSize - 10, this.cellSize - 10);
                         cellPanel.add(picLabel);
                     }
                 }
@@ -98,15 +100,18 @@ public class MapPanel extends JPanel implements MapObserver {
                     }
                 }
             }
+
             ArrayList<Player> currentCellPlayerList = currentCell.getCellPlayerList();
-            cellPanel.setLayout(null);
             for (int j = 0; j < currentCellPlayerList.size(); j++) {
-                JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId(), SwingConstants.CENTER));
+                JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId()), SwingConstants.CENTER);
                 int playerId = currentCellPlayerList.get(j).getPlayerId();
-                playerLabel.setBounds((playerId % 2) * (this.cellSize/2), (playerId / 2) * (this.cellSize/2), this.cellSize / 2, this.cellSize / 2);
+                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2), (playerId / 2) * (cellPanel.getHeight() / 2), cellPanel.getWidth() / 2, cellPanel.getHeight() / 2);
+                playerLabel.setBorder(new LineBorder(Color.black));
+                playerLabel.setForeground(Color.red);
                 playerLabel.setBackground(null);
                 cellPanel.add(playerLabel);
             }
+
             this.add(cellPanel);
 
             try {
@@ -128,9 +133,9 @@ public class MapPanel extends JPanel implements MapObserver {
                 break;
             }
         }
+
         this.setBounds(0, 0, mapPanelWidth, mapPanelHeight);
         this.setLayout(null);
-
         this.gameModel.mapSubscribe(this);
     }
 
@@ -140,6 +145,7 @@ public class MapPanel extends JPanel implements MapObserver {
         Cell currentCell = null;
         ArrayList<Cell> gameMapArrayList = this.gameMap.getGameMapArrayList();
         ArrayList<BridgeInfo> bridgeInfoArrayList = this.gameMap.getBridgeInfoArrayList();
+
         for (int i = 0; i < gameMapArrayList.size(); i++) {
             currentCell = gameMapArrayList.get(i);
             CellPanel cellPanel;
@@ -193,6 +199,7 @@ public class MapPanel extends JPanel implements MapObserver {
                             }
                         }
                         JLabel picLabel = new JLabel(new ImageIcon(image.getScaledInstance(this.cellSize - 10, this.cellSize - 10, Image.SCALE_DEFAULT)));
+                        picLabel.setBounds(5, 5, this.cellSize - 10, this.cellSize - 10);
                         cellPanel.add(picLabel);
                     }
                 }
@@ -206,15 +213,18 @@ public class MapPanel extends JPanel implements MapObserver {
                     }
                 }
             }
+
             ArrayList<Player> currentCellPlayerList = currentCell.getCellPlayerList();
-            cellPanel.setLayout(null);
             for (int j = 0; j < currentCellPlayerList.size(); j++) {
-                JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId(), SwingConstants.CENTER));
+                JLabel playerLabel = new JLabel(Integer.toString(currentCellPlayerList.get(j).getPlayerId()), SwingConstants.CENTER);
                 int playerId = currentCellPlayerList.get(j).getPlayerId();
-                playerLabel.setBounds((playerId % 2) * (this.cellSize/2), (playerId / 2) * (this.cellSize/2), this.cellSize / 2, this.cellSize / 2);
+                playerLabel.setBounds((playerId % 2) * (cellPanel.getWidth() / 2), (playerId / 2) * (cellPanel.getHeight() / 2), cellPanel.getWidth() / 2, cellPanel.getHeight() / 2);
+                playerLabel.setBorder(new LineBorder(Color.black));
+                playerLabel.setForeground(Color.red);
                 playerLabel.setBackground(null);
                 cellPanel.add(playerLabel);
             }
+
             this.add(cellPanel);
 
             try {
