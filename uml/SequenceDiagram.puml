@@ -1,0 +1,163 @@
+@startuml
+participant Actor
+Actor -> BridgeGame : main
+activate BridgeGame
+create GameModel
+BridgeGame -> GameModel : new
+activate GameModel
+create GameMap
+GameModel -> GameMap : new
+activate GameMap
+create StartCell
+GameMap -> StartCell : new
+activate StartCell
+create Cell
+StartCell -> Cell : new
+activate Cell
+Cell --> StartCell
+deactivate Cell
+StartCell --> GameMap
+deactivate StartCell
+create CardCell
+GameMap -> CardCell : new
+activate CardCell
+create Cell
+CardCell -> Cell : new
+activate Cell
+Cell --> CardCell
+deactivate Cell
+CardCell --> GameMap
+deactivate CardCell
+create EndCell
+GameMap -> EndCell : new
+activate EndCell
+create Cell
+EndCell -> Cell : new
+activate Cell
+Cell --> EndCell
+deactivate Cell
+EndCell --> GameMap
+deactivate EndCell
+create NormalCell
+GameMap -> NormalCell : new
+activate NormalCell
+create Cell
+NormalCell -> Cell : new
+activate Cell
+Cell --> NormalCell
+deactivate Cell
+NormalCell --> GameMap
+deactivate NormalCell
+create BridgeStartCell
+GameMap -> BridgeStartCell : new
+activate BridgeStartCell
+create Cell
+BridgeStartCell -> Cell : new
+activate Cell
+Cell --> BridgeStartCell
+deactivate Cell
+BridgeStartCell --> GameMap
+deactivate BridgeStartCell
+create BridgeInfo
+GameMap -> BridgeInfo : new
+activate BridgeInfo
+BridgeInfo --> GameMap
+deactivate BridgeInfo
+create BridgeEndCell
+GameMap -> BridgeEndCell : new
+activate BridgeEndCell
+create Cell
+BridgeEndCell -> Cell : new
+activate Cell
+Cell --> BridgeEndCell
+deactivate Cell
+BridgeEndCell --> GameMap
+deactivate BridgeEndCell
+create CardCell
+GameMap -> CardCell : new
+activate CardCell
+create Cell
+CardCell -> Cell : new
+activate Cell
+Cell --> CardCell
+deactivate Cell
+CardCell --> GameMap
+deactivate CardCell
+GameMap --> GameModel
+deactivate GameMap
+create Player
+GameModel -> Player : new
+activate Player
+Player --> GameModel
+deactivate Player
+GameModel -> Cell : addCellPlayer
+activate Cell
+Cell --> GameModel
+deactivate Cell
+GameModel --> BridgeGame
+deactivate GameModel
+create GameController
+BridgeGame -> GameController : new
+activate GameController
+create GameView
+GameController -> GameView : new
+activate GameView
+create GameFrame
+GameView -> GameFrame : new
+activate GameFrame
+create MapPanel
+GameFrame -> MapPanel : new
+activate MapPanel
+create CellPanel
+MapPanel -> CellPanel : new
+activate CellPanel
+CellPanel --> MapPanel
+deactivate CellPanel
+create CellPanel
+MapPanel -> CellPanel : new
+activate CellPanel
+CellPanel --> MapPanel
+deactivate CellPanel
+create CellPanel
+MapPanel -> CellPanel : new
+activate CellPanel
+CellPanel --> MapPanel
+deactivate CellPanel
+create CellPanel
+MapPanel -> CellPanel : new
+activate CellPanel
+CellPanel --> MapPanel
+deactivate CellPanel
+MapPanel -> GameModel : mapSubscribe
+activate GameModel
+GameModel --> MapPanel
+deactivate GameModel
+MapPanel --> GameFrame
+deactivate MapPanel
+create GamePanel
+GameFrame -> GamePanel : new
+activate GamePanel
+create StatusPanel
+GamePanel -> StatusPanel : new
+activate StatusPanel
+StatusPanel --> GamePanel
+deactivate StatusPanel
+create ControlPanel
+GamePanel -> ControlPanel : new
+activate ControlPanel
+ControlPanel --> GamePanel
+deactivate ControlPanel
+GamePanel -> GameModel : gameSubscribe
+activate GameModel
+GameModel --> GamePanel
+deactivate GameModel
+GamePanel --> GameFrame
+deactivate GamePanel
+GameFrame --> GameView
+deactivate GameFrame
+GameView --> GameController
+deactivate GameView
+GameController --> BridgeGame
+deactivate GameController
+return
+@enduml
