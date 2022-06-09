@@ -16,18 +16,27 @@ public class GameMap {
     public GameMap() throws IOException {
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter map file name (press enter for default) : ");
-        String mapFileName = scanner.nextLine();
-        if (mapFileName.length() == 0) {
-            mapFileName = "default";
+
+        BufferedReader mapFileReader;
+        while (true) {
+            try {
+                System.out.print("Enter map file name (press enter for default) : ");
+                String mapFileName = scanner.nextLine();
+                if (mapFileName.length() == 0) {
+                    mapFileName = "default";
+                }
+                mapFileName = "./map/" + mapFileName.split(".map")[0] + ".map";
+                mapFileReader = new BufferedReader(
+                        new FileReader(mapFileName)
+                );
+                break;
+            } catch (Exception ignored) {
+            }
         }
-        mapFileName = "./map/" + mapFileName + ".map";
 
         gameMapArrayList = new ArrayList<>();
         bridgeInfoArrayList = new ArrayList<>();
-        BufferedReader mapFileReader = new BufferedReader(
-                new FileReader(mapFileName)
-        );
+
         String mapReadBuffer;
         Direction directionPrev, directionNext = null;
         int x = 0, y = 0;

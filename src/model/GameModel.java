@@ -103,7 +103,7 @@ public class GameModel implements MapObservable, GameObservable {
 
     public void rollDice() {
         this.diceNumber = randomGenerator.nextInt(1, 7);
-        this.movableNumber = this.diceNumber - this.playerList.get(this.turnNumber).getBridgeCardCount();
+        this.movableNumber = Math.max(this.diceNumber - this.playerList.get(this.turnNumber).getBridgeCardCount(), 0);
         this.notifyGameUpdate();
     }
 
@@ -200,9 +200,10 @@ public class GameModel implements MapObservable, GameObservable {
                 this.endPlayerCount += 1;
                 break;
             }
-            if (currentCell.getClass() == CardCell.class && ((CardCell) currentCell).isCardAvailable()) {
-                currentPlayer.addCard(((CardCell) currentCell).getCard());
-            }
+        }
+
+        if (currentCell.getClass() == CardCell.class && ((CardCell) currentCell).isCardAvailable()) {
+            currentPlayer.addCard(((CardCell) currentCell).getCard());
         }
 
         currentCell.addCellPlayer(currentPlayer);

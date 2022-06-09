@@ -36,21 +36,13 @@ public class ControlPanel extends JPanel {
         JButton rollButton = new JButton("ROLL");
         rollButton.setBounds(0, this.panelHeight / 3, this.panelWidth / 2, this.panelHeight / 3);
         rollButton.addActionListener(e -> {
-            try {
-                this.gameController.rollDice();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            this.gameController.rollDice();
         });
 
         JButton restButton = new JButton("REST");
         restButton.setBounds(this.panelWidth / 2, this.panelHeight / 3, this.panelWidth / 2, this.panelHeight / 3);
         restButton.addActionListener(e -> {
-            try {
-                this.gameController.restTurn();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
+            this.gameController.restTurn();
         });
 
 

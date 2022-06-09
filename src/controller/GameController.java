@@ -15,26 +15,31 @@ public class GameController {
         this.gameView = new GameView(this.gameModel, this);
     }
 
-    public void rollDice() throws IOException {
+    public void rollDice() {
         if (this.gameModel.getDiceNumber() != 0) {
             this.gameView.alert("Dice already rolled!");
         } else {
             this.gameModel.rollDice();
-//            this.gameView.update();
         }
     }
 
-    public void restTurn() throws IOException {
-        this.gameModel.restTurn();
-//        this.gameView.update();
+    public void restTurn() {
+        if (this.gameModel.getDiceNumber() != 0) {
+            this.gameView.alert("Dice already rolled!");
+        } else {
+            this.gameModel.restTurn();
+        }
     }
 
     public void movePlayer(String moveString) throws Exception {
-        if (this.gameModel.isMovableString(moveString)) {
+        if (this.gameModel.getDiceNumber() == 0) {
+            this.gameView.alert("Dice not rolled!");
+            return;
+        } else if (this.gameModel.isMovableString(moveString)) {
             this.gameModel.movePlayer(moveString);
-//            this.gameView.update();
         } else {
             this.gameView.alert("Unaccepted Move!");
+            return;
         }
 
         if (gameModel.isGameEnd()) {
@@ -49,3 +54,4 @@ public class GameController {
         }
     }
 }
+
