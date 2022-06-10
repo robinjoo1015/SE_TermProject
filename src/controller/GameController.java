@@ -4,17 +4,14 @@ import model.GameModel;
 import view.GameView;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class GameController {
     private GameModel gameModel;
     private GameView gameView;
-//    private GameView testView;
 
     public GameController(GameModel gameModel) throws IOException {
         this.gameModel = gameModel;
         this.gameView = new GameView(this.gameModel, this);
-//        this.testView = new GameView(this.gameModel, this);
     }
 
     public void rollDice() {
@@ -56,4 +53,3 @@ public class GameController {
         }
     }
 }
-

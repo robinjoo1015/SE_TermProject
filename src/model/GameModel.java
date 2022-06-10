@@ -22,7 +22,6 @@ public class GameModel implements MapObservable, GameObservable {
     private Random randomGenerator;
     private int endPlayerCount;
     private ArrayList<Boolean> isPlayerEndList;
-
     private ArrayList<MapObserver> mapObserverArrayList;
     private ArrayList<GameObserver> gameObserverArrayList;
 
