@@ -1,0 +1,16 @@
+@startuml
+actor Player
+loop input move
+Player -> System : movePlayer(moveString)
+System -> System : validateMoveString(moveString)
+break valid move
+System --> Player : validMove
+end
+else invalid move
+System --> Player : invalidMove
+end
+opt card cell
+System -> Player : addCard(card)
+end
+System --> Player : nextTurn
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+actor Player
+loop rest
+Player -> System : restPlayer()
+System -> System : validateRest()
+break valid rest
+System --> Player : validRest
+end
+else dice already rolled
+System --> Player : diceAlreadyRolledMessage
+end
+opt bridge card
+System -> Player : removeBridgeCard()
+end
+System --> Player : nextTurn
+@enduml

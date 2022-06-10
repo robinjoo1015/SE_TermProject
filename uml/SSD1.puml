@@ -1,0 +1,12 @@
+@startuml
+actor Player
+loop file not found
+System -> Player : inputMessage
+Player -> System : mapFileInput(fileString)
+break file found
+System --> Player : fileFound
+else no input
+System --> Player: default
+end
+end
+@enduml

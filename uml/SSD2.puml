@@ -1,0 +1,11 @@
+@startuml
+actor Player
+loop dice roll
+Player -> System : rollDice()
+break dice not rolled
+System --> Player : diceNumber
+end
+else dice already rolled
+System --> Player : diceAlreadyRolledMessage
+end
+@enduml
