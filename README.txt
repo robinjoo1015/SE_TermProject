@@ -18,7 +18,7 @@
   6. 보고서
     소프트웨어공학_Term_Project_20184757_주영석.pdf
   7. 비디오 클립
-    소프트웨어공학_Term_Project_20184757_주영석.asdf
+    소프트웨어공학_Term_Project_VideoClip_20184757_주영석.html (YouTube 링크)
 
 2. 게임 실행 방법
   
